@@ -80,6 +80,18 @@ public class CitraKeabuan extends Citra{
     public int[][] getP() {
         return p;
     }
+    
+    public double[][] getD() {
+        double[][] d = new double[p.length][p[0].length];
+        
+        for(int i=0; i<p.length; i++) {
+            for(int j=0; j<p[0].length; j++) {
+                d[i][j] = p[i][j];
+            }
+        }
+        
+        return d;
+    }
 
     public void setP(int[][] p) {
         this.p = p;

@@ -8,10 +8,14 @@ package View;
 import Controller.Main;
 import Model.CitraKeabuan;
 import Model.CitraWarna;
+import Model.Hasil;
+import Model.Parameter;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.time.Duration;
+import java.time.Instant;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -62,12 +66,12 @@ public class Home extends javax.swing.JFrame {
         muat_gambar = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         grayscale = new javax.swing.JButton();
-        jPanel14 = new javax.swing.JPanel();
-        do_svd = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         do_dwt = new javax.swing.JButton();
         jPanel16 = new javax.swing.JPanel();
         do_copy_move_det = new javax.swing.JButton();
+        jPanel14 = new javax.swing.JPanel();
+        do_copy_move_svd = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
@@ -108,6 +112,22 @@ public class Home extends javax.swing.JFrame {
         jPanel38 = new javax.swing.JPanel();
         log_panel = new javax.swing.JPanel();
         jPanel36 = new javax.swing.JPanel();
+        progress = new javax.swing.JProgressBar();
+        jPanel39 = new javax.swing.JPanel();
+        jPanel40 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        spinnerNn = new javax.swing.JSpinner();
+        jPanel41 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        spinnerNf = new javax.swing.JSpinner();
+        jPanel42 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        spinnerWidthOverlappedBlock = new javax.swing.JSpinner();
+        jPanel43 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        spinnerHeightOverlappedBlock = new javax.swing.JSpinner();
+        jPanel44 = new javax.swing.JPanel();
+        saveParam = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tugas Akhir Fahri");
@@ -145,7 +165,7 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)))
-                .addContainerGap(292, Short.MAX_VALUE))
+                .addContainerGap(269, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Home", jPanel2);
@@ -219,18 +239,6 @@ public class Home extends javax.swing.JFrame {
 
         jPanel8.add(jPanel13);
 
-        jPanel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel14.setPreferredSize(new java.awt.Dimension(344, 20));
-        jPanel14.setLayout(new java.awt.BorderLayout());
-
-        do_svd.setText("SVD");
-        do_svd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        do_svd.setEnabled(false);
-        do_svd.setFocusPainted(false);
-        jPanel14.add(do_svd, java.awt.BorderLayout.CENTER);
-
-        jPanel8.add(jPanel14);
-
         jPanel15.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel15.setPreferredSize(new java.awt.Dimension(344, 20));
         jPanel15.setLayout(new java.awt.BorderLayout());
@@ -256,9 +264,31 @@ public class Home extends javax.swing.JFrame {
         do_copy_move_det.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         do_copy_move_det.setEnabled(false);
         do_copy_move_det.setFocusPainted(false);
+        do_copy_move_det.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                do_copy_move_detActionPerformed(evt);
+            }
+        });
         jPanel16.add(do_copy_move_det, java.awt.BorderLayout.CENTER);
 
         jPanel8.add(jPanel16);
+
+        jPanel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel14.setPreferredSize(new java.awt.Dimension(344, 20));
+        jPanel14.setLayout(new java.awt.BorderLayout());
+
+        do_copy_move_svd.setText("Detect Copy Move + SVD");
+        do_copy_move_svd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        do_copy_move_svd.setEnabled(false);
+        do_copy_move_svd.setFocusPainted(false);
+        do_copy_move_svd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                do_copy_move_svdActionPerformed(evt);
+            }
+        });
+        jPanel14.add(do_copy_move_svd, java.awt.BorderLayout.CENTER);
+
+        jPanel8.add(jPanel14);
 
         jPanel7.add(jPanel8);
 
@@ -337,7 +367,7 @@ public class Home extends javax.swing.JFrame {
         jPanel27.setLayout(new java.awt.BorderLayout());
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Size(KB)");
+        jLabel5.setText("File Size");
         jLabel5.setPreferredSize(new java.awt.Dimension(50, 14));
         jPanel27.add(jLabel5, java.awt.BorderLayout.CENTER);
 
@@ -459,11 +489,14 @@ public class Home extends javax.swing.JFrame {
         jPanel36.setLayout(jPanel36Layout);
         jPanel36Layout.setHorizontalGroup(
             jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 243, Short.MAX_VALUE)
+            .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
         );
         jPanel36Layout.setVerticalGroup(
             jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 51, Short.MAX_VALUE)
+            .addGroup(jPanel36Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel34.add(jPanel36);
@@ -475,6 +508,61 @@ public class Home extends javax.swing.JFrame {
         jPanel3.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         jTabbedPane2.addTab("Dashboard", jPanel3);
+
+        jPanel39.setLayout(new java.awt.GridLayout(5, 0, 0, 50));
+
+        jPanel40.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Nn");
+        jPanel40.add(jLabel8);
+
+        spinnerNn.setModel(new javax.swing.SpinnerNumberModel(5, 2, null, 1));
+        jPanel40.add(spinnerNn);
+
+        jPanel39.add(jPanel40);
+
+        jPanel41.setLayout(new java.awt.GridLayout(1, 0));
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Nf");
+        jPanel41.add(jLabel9);
+
+        spinnerNf.setModel(new javax.swing.SpinnerNumberModel(50, 1, null, 1));
+        jPanel41.add(spinnerNf);
+
+        jPanel39.add(jPanel41);
+
+        jPanel42.setLayout(new java.awt.GridLayout(1, 0));
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Width Overlapped Block");
+        jPanel42.add(jLabel10);
+
+        spinnerWidthOverlappedBlock.setModel(new javax.swing.SpinnerNumberModel(7, 1, null, 1));
+        jPanel42.add(spinnerWidthOverlappedBlock);
+
+        jPanel39.add(jPanel42);
+
+        jPanel43.setLayout(new java.awt.GridLayout(1, 0));
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Height Overlapped Block");
+        jPanel43.add(jLabel11);
+
+        spinnerHeightOverlappedBlock.setModel(new javax.swing.SpinnerNumberModel(7, 1, null, 1));
+        jPanel43.add(spinnerHeightOverlappedBlock);
+
+        jPanel39.add(jPanel43);
+
+        jPanel44.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        saveParam.setText("Simpan Parameter");
+        jPanel44.add(saveParam);
+
+        jPanel39.add(jPanel44);
+
+        jTabbedPane2.addTab("Parameter", jPanel39);
 
         jPanel1.add(jTabbedPane2, java.awt.BorderLayout.CENTER);
 
@@ -493,7 +581,7 @@ public class Home extends javax.swing.JFrame {
            this.panel_img.add(img);
            this.setProperti();
            this.grayscale.setEnabled(true);
-           this.do_svd.setEnabled(false);
+           this.do_copy_move_svd.setEnabled(false);
            this.do_dwt.setEnabled(false);
            this.do_copy_move_det.setEnabled(false);
            this.addTextToPanelLog("Memuat Gambar");
@@ -509,7 +597,7 @@ public class Home extends javax.swing.JFrame {
         this.panel_img.repaint();
         this.panel_img.revalidate();
         this.addTextToPanelLog("Grayscaling Gambar");
-        this.do_svd.setEnabled(true);
+        this.do_copy_move_svd.setEnabled(true);
         this.do_dwt.setEnabled(true);
     }//GEN-LAST:event_grayscaleActionPerformed
 
@@ -527,6 +615,63 @@ public class Home extends javax.swing.JFrame {
         this.addTextToPanelLog("  Height : "+this.abu.getBaris());
     }//GEN-LAST:event_do_dwtActionPerformed
 
+    private void do_copy_move_detActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_do_copy_move_detActionPerformed
+        this.addTextToPanelLog("Copy Move Detection");
+        
+        Parameter parameter = new Parameter(
+            (int)this.spinnerNn.getValue(),
+            (int)this.spinnerNf.getValue(),
+            (int)this.spinnerWidthOverlappedBlock.getValue(),
+            (int)this.spinnerHeightOverlappedBlock.getValue()
+        );
+        
+        Instant startTime = Instant.now();
+        Hasil hasil = this.main.detectCopyMove(abu, parameter, false);                
+        Instant endTime = Instant.now();
+        
+        Duration durasi = Duration.between(startTime, endTime);
+        
+        this.panel_img.removeAll();
+        this.panel_img.repaint();
+        JLabel img = new JLabel(new ImageIcon(hasil.getCitra().getImg()));
+        this.panel_img.add(img);
+        
+        this.panel_img.repaint();
+        this.panel_img.revalidate();        
+        
+        this.addTextToPanelLog("  jumlah objek terdeteksi : " +hasil.getDetectedObjectCount());
+        this.addTextToPanelLog("  durasi : " +durasi.getSeconds());
+    }//GEN-LAST:event_do_copy_move_detActionPerformed
+
+    private void do_copy_move_svdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_do_copy_move_svdActionPerformed
+        
+        this.addTextToPanelLog("Copy Move Detection");
+        
+        Parameter parameter = new Parameter(
+            (int)this.spinnerNn.getValue(),
+            (int)this.spinnerNf.getValue(),
+            (int)this.spinnerWidthOverlappedBlock.getValue(),
+            (int)this.spinnerHeightOverlappedBlock.getValue()
+        );
+        
+        Instant startTime = Instant.now();
+        Hasil hasil = this.main.detectCopyMove(abu, parameter, true);                
+        Instant endTime = Instant.now();
+        
+        Duration durasi = Duration.between(startTime, endTime);
+        
+        this.panel_img.removeAll();
+        this.panel_img.repaint();
+        JLabel img = new JLabel(new ImageIcon(hasil.getCitra().getImg()));
+        this.panel_img.add(img);
+        
+        this.panel_img.repaint();
+        this.panel_img.revalidate();        
+        
+        this.addTextToPanelLog("  jumlah objek terdeteksi : " +hasil.getDetectedObjectCount());
+        this.addTextToPanelLog("  durasi : " +durasi.getSeconds()+ " s");
+    }//GEN-LAST:event_do_copy_move_svdActionPerformed
+
     private void setProperti(){
         this.width_img.setText(this.warna.getKolom()+"");
         this.height_img.setText(this.warna.getBaris()+"");
@@ -540,58 +685,27 @@ public class Home extends javax.swing.JFrame {
         this.log_panel.add(label);
         this.log_panel.revalidate();
         this.log_panel.repaint();
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Home().setVisible(true);
-            }
-        });
-    }
+    }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton do_copy_move_det;
+    private javax.swing.JButton do_copy_move_svd;
     private javax.swing.JButton do_dwt;
-    private javax.swing.JButton do_svd;
     private javax.swing.JLabel file_name;
     private javax.swing.JButton grayscale;
     private javax.swing.JLabel height_img;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -624,7 +738,13 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel36;
     private javax.swing.JPanel jPanel37;
     private javax.swing.JPanel jPanel38;
+    private javax.swing.JPanel jPanel39;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel40;
+    private javax.swing.JPanel jPanel41;
+    private javax.swing.JPanel jPanel42;
+    private javax.swing.JPanel jPanel43;
+    private javax.swing.JPanel jPanel44;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -639,8 +759,14 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel menu;
     private javax.swing.JButton muat_gambar;
     private javax.swing.JPanel panel_img;
+    private javax.swing.JProgressBar progress;
     private javax.swing.JPanel result;
+    private javax.swing.JButton saveParam;
     private javax.swing.JLabel size_img;
+    private javax.swing.JSpinner spinnerHeightOverlappedBlock;
+    private javax.swing.JSpinner spinnerNf;
+    private javax.swing.JSpinner spinnerNn;
+    private javax.swing.JSpinner spinnerWidthOverlappedBlock;
     private javax.swing.JLabel width_img;
     // End of variables declaration//GEN-END:variables
 }
