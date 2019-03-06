@@ -7,6 +7,8 @@ package Controller;
 
 import Model.CitraKeabuan;
 import Model.CitraWarna;
+import Model.Hasil;
+import Model.Parameter;
 import View.Home;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,6 +24,8 @@ import javax.swing.JFileChooser;
  */
 public class Main {
 
+    private Home home;
+    
     /**
      * @param args the command line arguments
      */
@@ -31,12 +35,13 @@ public class Main {
     }
     
     private void tampilkanPanel(Main main){
-        Home home = new Home(main);
+        home = new Home(main);
         home.setVisible(true);
     }
     
     public CitraWarna muatGambar(){
-       JFileChooser chooser = new JFileChooser();
+       JFileChooser chooser = new JFileChooser("Dataset");
+       
        CitraWarna warna = null;
        if(chooser.showOpenDialog(chooser) == JFileChooser.APPROVE_OPTION){          
            File f = chooser.getSelectedFile();
@@ -53,7 +58,7 @@ public class Main {
     }
     
     public CitraKeabuan do_graysacle(CitraWarna citra){
-        Prapengolahan pra_proses = new Prapengolahan();
+        Process pra_proses = new Process();
         return pra_proses.doGrayScale(citra);
     }
     
@@ -63,4 +68,11 @@ public class Main {
         return new CitraKeabuan(dwt.getLL());
     }
     
+    public Hasil detectCopyMove(CitraKeabuan citra, Parameter parameter, boolean useSVD) {                 
+        DetectCopyMove d = new DetectCopyMove(citra.getD(), parameter);        
+        
+        CitraKeabuan citraHasil = d.process(useSVD);
+        
+        return new Hasil(d.getDetectedObject(), citraHasil);
+    }
 }
