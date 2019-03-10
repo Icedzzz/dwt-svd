@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -55,6 +56,20 @@ public class Main {
            }
        }
        return warna;
+    }
+    
+    public void simpanGambar(CitraKeabuan citra){
+        if(citra != null){
+           JFileChooser chooser = new JFileChooser("Dataset");
+           if(chooser.showSaveDialog(chooser) == JFileChooser.APPROVE_OPTION){
+               try {
+                   ImageIO.write(citra.getImg(),"jpg",new File(chooser.getSelectedFile().toString()+".jpg"));
+                   System.out.println("done");
+               } catch (IOException ex) {
+                   Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           }
+        }
     }
     
     public CitraKeabuan do_graysacle(CitraWarna citra){

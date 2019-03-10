@@ -104,7 +104,7 @@ public class Home extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         panel_img = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        simpan_gambar = new javax.swing.JButton();
         log = new javax.swing.JPanel();
         jPanel34 = new javax.swing.JPanel();
         jPanel35 = new javax.swing.JPanel();
@@ -112,7 +112,6 @@ public class Home extends javax.swing.JFrame {
         jPanel38 = new javax.swing.JPanel();
         log_panel = new javax.swing.JPanel();
         jPanel36 = new javax.swing.JPanel();
-        progress = new javax.swing.JProgressBar();
         jPanel39 = new javax.swing.JPanel();
         jPanel40 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -133,6 +132,8 @@ public class Home extends javax.swing.JFrame {
         setTitle("Tugas Akhir Fahri");
 
         jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jTabbedPane2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
         jLabel1.setText("Deteksi Salin Pindah");
@@ -451,8 +452,14 @@ public class Home extends javax.swing.JFrame {
         jPanel6.setPreferredSize(new java.awt.Dimension(383, 10));
         jPanel6.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setText("Simpan Gambar");
-        jPanel6.add(jButton1, java.awt.BorderLayout.LINE_START);
+        simpan_gambar.setText("Simpan Gambar");
+        simpan_gambar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        simpan_gambar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpan_gambarActionPerformed(evt);
+            }
+        });
+        jPanel6.add(simpan_gambar, java.awt.BorderLayout.LINE_START);
 
         jPanel5.add(jPanel6);
 
@@ -489,14 +496,11 @@ public class Home extends javax.swing.JFrame {
         jPanel36.setLayout(jPanel36Layout);
         jPanel36Layout.setHorizontalGroup(
             jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addGap(0, 250, Short.MAX_VALUE)
         );
         jPanel36Layout.setVerticalGroup(
             jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel36Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 51, Short.MAX_VALUE)
         );
 
         jPanel34.add(jPanel36);
@@ -509,10 +513,13 @@ public class Home extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Dashboard", jPanel3);
 
+        jPanel39.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Copy Move Parameter", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         jPanel39.setLayout(new java.awt.GridLayout(5, 0, 0, 50));
 
+        jPanel40.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel40.setLayout(new java.awt.GridLayout(1, 2));
 
+        jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Nn");
         jPanel40.add(jLabel8);
@@ -522,8 +529,10 @@ public class Home extends javax.swing.JFrame {
 
         jPanel39.add(jPanel40);
 
+        jPanel41.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel41.setLayout(new java.awt.GridLayout(1, 0));
 
+        jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Nf");
         jPanel41.add(jLabel9);
@@ -533,8 +542,10 @@ public class Home extends javax.swing.JFrame {
 
         jPanel39.add(jPanel41);
 
+        jPanel42.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel42.setLayout(new java.awt.GridLayout(1, 0));
 
+        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Width Overlapped Block");
         jPanel42.add(jLabel10);
@@ -544,8 +555,10 @@ public class Home extends javax.swing.JFrame {
 
         jPanel39.add(jPanel42);
 
+        jPanel43.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel43.setLayout(new java.awt.GridLayout(1, 0));
 
+        jLabel11.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Height Overlapped Block");
         jPanel43.add(jLabel11);
@@ -555,10 +568,11 @@ public class Home extends javax.swing.JFrame {
 
         jPanel39.add(jPanel43);
 
-        jPanel44.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel44.setLayout(new java.awt.BorderLayout());
 
         saveParam.setText("Simpan Parameter");
-        jPanel44.add(saveParam);
+        saveParam.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel44.add(saveParam, java.awt.BorderLayout.CENTER);
 
         jPanel39.add(jPanel44);
 
@@ -626,7 +640,8 @@ public class Home extends javax.swing.JFrame {
         );
         
         Instant startTime = Instant.now();
-        Hasil hasil = this.main.detectCopyMove(abu, parameter, false);                
+        Hasil hasil = this.main.detectCopyMove(abu, parameter, false); 
+        this.abu = hasil.getCitra();
         Instant endTime = Instant.now();
         
         Duration durasi = Duration.between(startTime, endTime);
@@ -655,7 +670,8 @@ public class Home extends javax.swing.JFrame {
         );
         
         Instant startTime = Instant.now();
-        Hasil hasil = this.main.detectCopyMove(abu, parameter, true);                
+        Hasil hasil = this.main.detectCopyMove(abu, parameter, true);    
+        this.abu = hasil.getCitra();
         Instant endTime = Instant.now();
         
         Duration durasi = Duration.between(startTime, endTime);
@@ -671,6 +687,10 @@ public class Home extends javax.swing.JFrame {
         this.addTextToPanelLog("  jumlah objek terdeteksi : " +hasil.getDetectedObjectCount());
         this.addTextToPanelLog("  durasi : " +durasi.getSeconds()+ " s");
     }//GEN-LAST:event_do_copy_move_svdActionPerformed
+
+    private void simpan_gambarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpan_gambarActionPerformed
+       this.main.simpanGambar(this.abu);
+    }//GEN-LAST:event_simpan_gambarActionPerformed
 
     private void setProperti(){
         this.width_img.setText(this.warna.getKolom()+"");
@@ -694,7 +714,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel file_name;
     private javax.swing.JButton grayscale;
     private javax.swing.JLabel height_img;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -759,9 +778,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel menu;
     private javax.swing.JButton muat_gambar;
     private javax.swing.JPanel panel_img;
-    private javax.swing.JProgressBar progress;
     private javax.swing.JPanel result;
     private javax.swing.JButton saveParam;
+    private javax.swing.JButton simpan_gambar;
     private javax.swing.JLabel size_img;
     private javax.swing.JSpinner spinnerHeightOverlappedBlock;
     private javax.swing.JSpinner spinnerNf;
